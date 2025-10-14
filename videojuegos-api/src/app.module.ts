@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JuegosModule } from './juegos/juegos.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { JuegosModule } from './juegos/juegos.module';
       synchronize: true, // solo para desarrollo
     }),
     JuegosModule,
+    UsuariosModule,
   ],
 })
 export class AppModule {}
