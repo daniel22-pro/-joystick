@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'sdy-games' title`, () => {
+  it(`should have the 'SDY_GAMES_Angular' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sdy-games');
+    expect(app.title).toEqual('SDY_GAMES_Angular');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, sdy-games');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, SDY_GAMES_Angular');
   });
 });
