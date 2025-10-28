@@ -1,5 +1,12 @@
-// entities/juego.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// juego.entity.ts
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Categoria } from '../categorias/entities/categoria.entity';
 
 @Entity()
 export class Juego {
@@ -18,6 +25,10 @@ export class Juego {
   @Column({ type: 'date' })
   fecha_lanzamiento: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('int')
   precio: number;
+
+  @ManyToOne(() => Categoria, (categoria) => categoria.juegos, { eager: true })
+  @JoinColumn({ name: 'categoriaId' })
+  categoria: Categoria;
 }

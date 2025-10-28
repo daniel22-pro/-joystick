@@ -1,21 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateJuegoDto {
-  @ApiProperty({ example: 'God of War Ragnarök' })
+  @ApiProperty()
   nombre: string;
 
-  @ApiProperty({ example: 'Acción y aventura' })
+  @ApiProperty()
   genero: string;
 
-  @ApiProperty({ example: 'PlayStation 5' })
+  @ApiProperty()
   plataforma: string;
 
-  @ApiProperty({
-    example: '2022-11-09',
-    description: 'Fecha de lanzamiento (YYYY-MM-DD)',
-  })
+  @ApiProperty()
   fecha_lanzamiento: string;
 
-  @ApiProperty({ example: 250000, description: 'Precio del videojuego' })
+  @ApiProperty()
   precio: number;
+
+  @ApiProperty({
+    description: 'ID de la categoría a la que pertenece el juego',
+  })
+  categoriaId: number;
 }
