@@ -1,0 +1,17 @@
+/* footer.component.css */
+.main-footer {
+  text-align: center;
+  padding: 1rem;
+  background: #0d111a;
+  border-top: 2px solid var(--primary-color);
+  color: var(--text-light);
+}
+
+.social a {
+  margin: 0 0.5rem;
+  color: var(--secondary-color);
+}
+
+.social a:hover {
+  color: var(--primary-color);
+}

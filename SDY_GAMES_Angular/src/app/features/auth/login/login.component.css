@@ -1,0 +1,33 @@
+/* login.component.css */
+.login-container {
+  width: 350px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background: #121826;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #0d111a;
+  color: var(--text-light);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--secondary-color);
+}

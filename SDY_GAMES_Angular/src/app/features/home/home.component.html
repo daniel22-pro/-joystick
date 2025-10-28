@@ -1,0 +1,36 @@
+<section class="home-container flex flex-col min-h-screen bg-[#0a0f1a] text-white">
+  <!-- Header -->
+
+  <!-- Contenido principal -->
+  <main class="flex-1 flex flex-col items-center justify-center px-6 py-12">
+    <!-- Banner principal -->
+    <div class="banner text-center mb-12 animate-fade-in">
+      <h1 class="text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+        🎮 SDY Games
+      </h1>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+        Explora los mejores títulos, descubre nuevas aventuras y lleva tu experiencia gamer al siguiente nivel.
+      </p>
+    </div>
+
+    <!-- Cuadrícula de juegos -->
+    <div
+      class="game-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-6xl px-4"
+    >
+      <div
+        class="game-card bg-[#111827] rounded-2xl shadow-md hover:shadow-emerald-400/20 transform hover:scale-105 transition-all duration-300 cursor-pointer"
+        *ngFor="let game of games"
+      >
+        <img
+          [src]="game.image"
+          alt="{{ game.title }}"
+          class="rounded-t-2xl w-full h-56 object-cover"
+        />
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold text-emerald-300">{{ game.title }}</h3>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</section>

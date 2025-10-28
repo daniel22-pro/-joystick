@@ -1,0 +1,33 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0a0f1a;
+  color: white;
+}
+
+.banner {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  flex: 1;
+}
+
+.game-card {
+  background: #111827;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+}
