@@ -1,0 +1,13 @@
+<div class="home-container">
+  <h1 class="title">🎮 SDY Games</h1>
+  <p class="subtitle">
+    Explora los mejores títulos, descubre nuevas aventuras y lleva tu experiencia gamer al siguiente nivel.
+  </p>
+
+  <div class="games-grid">
+    <div class="game-card" *ngFor="let game of games">
+      <img [src]="game.image" [alt]="game.title" class="game-image" />
+      <h2 class="game-title">{{ game.title }}</h2>
+    </div>
+  </div>
+</div>

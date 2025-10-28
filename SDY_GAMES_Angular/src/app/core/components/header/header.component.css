@@ -1,0 +1,29 @@
+/* header.component.css */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d111a;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.logo span {
+  color: var(--primary-color);
+}
+
+nav a {
+  margin: 0 1rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
