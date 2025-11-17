@@ -1,0 +1,23 @@
+.register-box {
+  max-width: 350px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.msg {
+  margin-top: 10px;
+  color: green;
+}

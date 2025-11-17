@@ -26,6 +26,12 @@ export class AuthService {
     );
   }
 
+
+  register(data: any) {
+  return this.http.post('http://localhost:3002/api/usuarios', data);
+}
+
+
   // 👉 Obtener token
   getToken() {
     return localStorage.getItem('token');
@@ -46,4 +52,5 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
   }
+
 }
