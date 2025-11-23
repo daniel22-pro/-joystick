@@ -20,4 +20,7 @@ export class Juego {
 
   @Column('decimal', { precision: 10, scale: 2 })
   precio: number;
+
+  @Column()
+  imagen_url: string;
 }
