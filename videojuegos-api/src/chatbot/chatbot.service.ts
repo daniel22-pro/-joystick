@@ -1,32 +1,30 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {
-  GoogleGenerativeAI,
-  GenerativeModel,
-  ChatSession,
-} from '@google/generative-ai';
+import Groq from 'groq-sdk';
+
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
 
 @Injectable()
 export class ChatbotService implements OnModuleInit {
-  private genAI: GoogleGenerativeAI;
-  private model: GenerativeModel;
+  private groq: Groq;
 
-  // Almacena las sesiones de chat por usuario
-  private chatSessions: Map<string, ChatSession> = new Map();
+  // Almacena el historial de chat por usuario
+  private chatHistories: Map<string, ChatMessage[]> = new Map();
 
   constructor(private configService: ConfigService) {}
 
   onModuleInit() {
-    // Inicializa el cliente de Gemini al arrancar el módulo
-    const apiKey = this.configService.get<string>('GEMINI_API_KEY');
+    const apiKey = this.configService.get<string>('GROQ_API_KEY');
 
     if (!apiKey) {
-      throw new Error('GEMINI_API_KEY no está configurada');
+      throw new Error('GROQ_API_KEY no está configurada');
     }
 
-    this.genAI = new GoogleGenerativeAI(apiKey);
-    this.model = this.genAI.getGenerativeModel({
-      model: 'models/gemini-1.5-pro',
+    this.groq = new Groq({
+      apiKey: apiKey,
     });
   }
 
@@ -35,42 +33,50 @@ export class ChatbotService implements OnModuleInit {
    */
   async sendMessage(prompt: string): Promise<string> {
     try {
-      const result = await this.model.generateContent(prompt);
-      const response = result.response;
-      return response.text();
+      const completion = await this.groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant', // Gratis y rápido
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 1000,
+        temperature: 0.7,
+      });
+
+      return completion.choices[0]?.message?.content || 'Sin respuesta';
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : 'Error desconocido';
-      throw new Error(`Error al comunicarse con Gemini: ${errorMessage}`);
+      throw new Error(`Error al comunicarse con Groq: ${errorMessage}`);
     }
   }
 
   /**
    * Inicia o continúa una conversación con historial
-   * @param userId - Identificador único del usuario
-   * @param message - Mensaje del usuario
    */
   async chat(userId: string, message: string): Promise<string> {
     try {
-      let chatSession = this.chatSessions.get(userId);
+      let history = this.chatHistories.get(userId);
 
-      // Si no existe una sesión para este usuario, crear una nueva
-      if (!chatSession) {
-        chatSession = this.model.startChat({
-          history: [],
-          generationConfig: {
-            maxOutputTokens: 1000,
-            temperature: 0.7,
-          },
-        });
-        this.chatSessions.set(userId, chatSession);
+      if (!history) {
+        history = [];
+        this.chatHistories.set(userId, history);
       }
 
-      // Enviar mensaje y obtener respuesta
-      const result = await chatSession.sendMessage(message);
-      const response = result.response;
+      // Agregar mensaje del usuario al historial
+      history.push({ role: 'user', content: message });
 
-      return response.text();
+      const completion = await this.groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant',
+        messages: history,
+        max_tokens: 1000,
+        temperature: 0.7,
+      });
+
+      const assistantMessage =
+        completion.choices[0]?.message?.content || 'Sin respuesta';
+
+      // Agregar respuesta al historial
+      history.push({ role: 'assistant', content: assistantMessage });
+
+      return assistantMessage;
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : 'Error desconocido';
@@ -82,7 +88,7 @@ export class ChatbotService implements OnModuleInit {
    * Reinicia la conversación de un usuario
    */
   clearHistory(userId: string): void {
-    this.chatSessions.delete(userId);
+    this.chatHistories.delete(userId);
   }
 
   /**
@@ -94,25 +100,19 @@ export class ChatbotService implements OnModuleInit {
     systemPrompt: string,
   ): Promise<string> {
     try {
-      const chatSession = this.model.startChat({
-        history: [
-          {
-            role: 'user',
-            parts: [{ text: systemPrompt }],
-          },
-          {
-            role: 'model',
-            parts: [{ text: 'Entendido. Seguiré esas instrucciones.' }],
-          },
-        ],
-        generationConfig: {
-          maxOutputTokens: 1000,
-          temperature: 0.7,
-        },
+      const messages: ChatMessage[] = [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: message },
+      ];
+
+      const completion = await this.groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant',
+        messages: messages,
+        max_tokens: 1000,
+        temperature: 0.7,
       });
 
-      const result = await chatSession.sendMessage(message);
-      return result.response.text();
+      return completion.choices[0]?.message?.content || 'Sin respuesta';
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : 'Error desconocido';
