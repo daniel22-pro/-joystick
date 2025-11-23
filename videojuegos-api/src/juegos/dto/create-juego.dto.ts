@@ -4,4 +4,5 @@ export class CreateJuegoDto {
   plataforma: string;
   fecha_lanzamiento: string;
   precio: number;
+  imagen_url: string;
 }
