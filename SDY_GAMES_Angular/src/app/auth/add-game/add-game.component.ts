@@ -42,7 +42,7 @@ import { GameService } from '../../services/game.service';
 
           <div class="input-group">
             <input type="number" placeholder=" " [(ngModel)]="precio" name="precio" required min="0" step="0.01">
-            <label>Precio (€)</label>
+            <label>Precio ($)</label>
           </div>
 
           <div class="input-group">
@@ -64,61 +64,71 @@ import { GameService } from '../../services/game.service';
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-      padding: 2rem 1rem;
+    :host { 
+      display: block; 
+      min-height: 100vh; 
+      background: #0a0a12; 
+      font-family: 'Segoe UI', sans-serif; 
+      padding: 3rem 1rem;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 560px;
       margin: 0 auto;
     }
 
     .card {
-      background: rgba(20, 25, 40, 0.75);
-      backdrop-filter: blur(12px);
+      background: #0f0f1a;
+      padding: 3rem 2.5rem;
       border-radius: 20px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(0, 170, 255, 0.2);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.6), 
+        0 0 30px rgba(0, 212, 255, 0.15);
+      border: 1px solid #1a1a2e;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     h1 {
-      font-size: 2rem;
-      color: #00aaff;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #00d4ff, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
       margin: 0;
-      font-weight: 700;
     }
 
     .btn-back {
-      background: rgba(0, 170, 255, 0.15);
-      color: #00aaff;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      font-size: 0.95rem;
+      background: rgba(0, 212, 255, 0.1);
+      color: #00d4ff;
+      border: 1px solid #00d4ff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
     }
 
     .btn-back:hover {
-      background: #00aaff;
-      color: white;
+      background: rgba(0, 212, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
     }
 
     .form {
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
+      gap: 1.5rem;
     }
 
     .input-group {
@@ -127,60 +137,63 @@ import { GameService } from '../../services/game.service';
 
     .input-group input {
       width: 100%;
-      padding: 1rem 1rem 1rem 1rem;
-      background: rgba(22, 33, 62, 0.8);
-      border: 2px solid transparent;
+      padding: 1rem 1.2rem;
       border-radius: 12px;
-      color: white;
+      border: none;
+      background: #16213e;
+      color: #ccc;
       font-size: 1rem;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
+      outline: none;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .input-group input::placeholder {
+      color: #666;
+      font-weight: 500;
     }
 
     .input-group input:focus {
-      outline: none;
-      border-color: #00aaff;
-      box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.2);
+      background: #1a1a2e;
+      color: #fff;
+      box-shadow: 
+        0 0 0 3px rgba(0, 212, 255, 0.3), 
+        0 0 15px rgba(0, 212, 255, 0.4);
     }
 
     .input-group label {
       position: absolute;
-      left: 1rem;
+      left: 1.2rem;
       top: 1rem;
-      color: #88aaff;
+      color: #666;
       font-size: 1rem;
+      font-weight: 500;
       pointer-events: none;
       transition: all 0.3s ease;
-      background: transparent;
     }
 
-    /* Efecto flotante del label */
     .input-group input:focus ~ label,
     .input-group input:not(:placeholder-shown) ~ label {
-      top: -0.6rem;
-      left: 0.8rem;
+      top: -0.7rem;
+      left: 1rem;
       font-size: 0.85rem;
-      color: #00aaff;
-      background: rgba(20, 25, 40, 0.9);
-      padding: 0 0.4rem;
+      color: #00d4ff;
+      background: #0f0f1a;
+      padding: 0 0.5rem;
     }
 
     .btn-submit {
       margin-top: 1rem;
       padding: 1rem;
-      background: linear-gradient(90deg, #00aaff, #0088cc);
+      background: linear-gradient(135deg, #00d4ff, #00aaff);
       color: white;
       border: none;
       border-radius: 12px;
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 170, 255, 0.3);
-    }
-
-    .btn-submit:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 170, 255, 0.5);
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
     }
 
     .btn-submit:disabled {
@@ -189,24 +202,30 @@ import { GameService } from '../../services/game.service';
       transform: none;
     }
 
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 212, 255, 0.5);
+    }
+
     .message {
       margin-top: 1.5rem;
       padding: 1rem;
-      border-radius: 10px;
+      border-radius: 12px;
       text-align: center;
       font-weight: 500;
+      font-size: 1rem;
     }
 
     .success {
-      background: rgba(0, 200, 100, 0.2);
-      color: #00ff9d;
-      border: 1px solid rgba(0, 255, 150, 0.3);
+      background: rgba(81, 255, 138, 0.1);
+      color: #51ff8a;
+      border: 1px solid rgba(81, 255, 138, 0.3);
     }
 
     .error {
-      background: rgba(255, 50, 50, 0.2);
+      background: rgba(255, 107, 107, 0.1);
       color: #ff6b6b;
-      border: 1px solid rgba(255, 100, 100, 0.3);
+      border: 1px solid rgba(255, 107, 107, 0.3);
     }
   `]
 })

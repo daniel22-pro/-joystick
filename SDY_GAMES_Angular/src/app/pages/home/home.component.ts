@@ -11,25 +11,40 @@ import { Router } from '@angular/router';
   template: `
     <header class="header">
       <div class="logo">SDYJOYSTICK</div>
+
       <nav class="nav">
-        <a href="#" class="nav-link">Categorias</a>
+
+        <!-- 🔥 Botón Carrito -->
+        <button class="cart-btn" (click)="goToCart()">
+          🛒 Carrito
+        </button>
+
+        <!-- 🔥 Mostrar solo si es admin -->
+        <button 
+          *ngIf="isAdmin" 
+          class="add-btn" 
+          (click)="goToAdd()"
+        >
+          + Agregar Juego
+        </button>
+
+        <!-- 🔥 Botón logout -->
+        <button class="logout-btn" (click)="logout()">
+          Cerrar Sesión
+        </button>
+
       </nav>
     </header>
 
     <main class="container">
 
-      <!-- 🔥 Botón para agregar juego -->
-      <div class="actions">
-        <button class="add-btn" (click)="goToAdd()">+ Agregar Juego</button>
-      </div>
-
       <div class="games-grid">
 
-        <!-- Juegos cargados desde el backend -->
+        <!-- Juegos -->
         <div 
           *ngFor="let game of games" 
           class="game-card"
-          (click)="onGameClick(game)"
+          (click)="verDetalle(game)"
         >
           <img 
             [src]="game.imagen_url" 
@@ -68,29 +83,23 @@ import { Router } from '@angular/router';
 
     .nav {
       display: flex;
-      gap: 2rem;
+      gap: 1rem;
+      align-items: center;
     }
 
-    .nav-link {
-      color: #ccc;
-      text-decoration: none;
-      transition: color 0.3s;
+    .cart-btn {
+      background: #ffc107;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .3s;
     }
 
-    .nav-link:hover {
-      color: #00d4ff;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-
-    /* 🔥 Estilos del botón agregar */
-    .actions {
-      text-align: right;
-      margin-bottom: 20px;
+    .cart-btn:hover {
+      background: #e0a800;
     }
 
     .add-btn {
@@ -107,6 +116,28 @@ import { Router } from '@angular/router';
 
     .add-btn:hover {
       background: #00aacc;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #ff4d4d;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: #ff4d4d;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #ff4d4d;
+      color: white;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
     }
 
     .games-grid {
@@ -142,7 +173,7 @@ import { Router } from '@angular/router';
       width: 100%;
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
       padding: 1rem;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
     }
   `]
@@ -150,6 +181,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   games: any[] = [];
+  isAdmin = false;
 
   constructor(
     private auth: AuthService,
@@ -158,26 +190,30 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const role = this.auth.getUserRole();
+    this.isAdmin = role ? role.trim().toLowerCase() === 'admin' : false;
+
     this.gameService.getGames().subscribe({
-      next: (data) => {
-        this.games = data;
-        console.log("Juegos cargados:", data);
-      },
-      error: (err) => {
-        console.error("Error al cargar juegos:", err);
-      }
+      next: (data) => this.games = data,
+      error: (err) => console.error("Error al cargar juegos:", err)
     });
   }
 
   logout() {
     this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
-  onGameClick(game: any) {
-    console.log('Juego clickeado:', game.nombre);
+  verDetalle(game: any) {
+    this.router.navigate(['/detallejuego', game.id]);
   }
 
   goToAdd() {
     this.router.navigate(['/add-game']);
+  }
+
+  // 🔥 Ir al carrito
+  goToCart() {
+    this.router.navigate(['/carrito']);
   }
 }
