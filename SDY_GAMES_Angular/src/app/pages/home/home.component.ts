@@ -12,13 +12,7 @@ import { Router } from '@angular/router';
     <header class="header">
       <div class="logo">SDYJOYSTICK</div>
       <nav class="nav">
-        <a href="#" class="nav-link">Juegos</a>
-        <a href="#" class="nav-link">Trending</a>
-        <a href="#" class="nav-link">Top</a>
-        <a href="#" class="nav-link">Actualizaciones recientes</a>
-        <a href="#" class="nav-link">Solicitud</a>
-        <a href="#" class="nav-link">Colecciones</a>
-        <a href="#" class="nav-link">Editores</a>
+        <a href="#" class="nav-link">Categorias</a>
       </nav>
     </header>
 
