@@ -7,7 +7,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi()), // 👈 cambia esta línea
-    TokenInterceptor // 👈 registra el interceptor clásico
+    provideHttpClient(withInterceptorsFromDi()),
+    TokenInterceptor 
   ]
 };

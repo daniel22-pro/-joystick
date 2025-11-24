@@ -1,0 +1,64 @@
+<!-- Botón flotante para abrir el chat -->
+<button class="chat-toggle" (click)="toggleChat()" [class.open]="isOpen">
+  <span *ngIf="!isOpen">💬</span>
+  <span *ngIf="isOpen">✕</span>
+</button>
+
+<!-- Ventana del chat -->
+<div class="chat-container" [class.open]="isOpen">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-info">
+      <span class="bot-avatar">🎮</span>
+      <div class="header-text">
+        <h3>Asistente de Videojuegos</h3>
+        <span class="status">En línea</span>
+      </div>
+    </div>
+    <button class="clear-btn" (click)="clearChat()" title="Limpiar chat">
+      🗑️
+    </button>
+  </div>
+
+  <!-- Mensajes -->
+  <div class="chat-messages" #messagesContainer>
+    <div
+      *ngFor="let message of messages"
+      class="message"
+      [class.user]="message.isUser"
+      [class.bot]="!message.isUser"
+    >
+      <div class="message-content">
+        <p>{{ message.text }}</p>
+        <span class="timestamp">
+          {{ message.timestamp | date : 'shortTime' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div *ngIf="isLoading" class="message bot">
+      <div class="message-content loading">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      (keypress)="onKeyPress($event)"
+      placeholder="Escribe tu mensaje..."
+      [disabled]="isLoading"
+    />
+    <button (click)="sendMessage()" [disabled]="isLoading || !newMessage.trim()">
+      ➤
+    </button>
+  </div>
+</div>
