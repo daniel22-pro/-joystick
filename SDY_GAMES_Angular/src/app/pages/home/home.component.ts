@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { GameService } from '../../services/game.service';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent],
   template: `
     <header class="header">
       <div class="logo">SDYJOYSTICK</div>
