@@ -13,18 +13,18 @@ export class AuthService {
 
   // 👉 Login
   login(email: string, password: string) {
-    return this.http.post<{ access_token: string; role: string }>(
-      `${this.apiUrl}/login`,
-      { email, password }
-    ).pipe(
+  return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+    .pipe(
       tap(res => {
         if (res.access_token) {
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('role', res.role);   // ← GUARDAR ROL
+          localStorage.setItem('role', res.usuario.role);  // ← AQUI ESTÁ LA CLAVE
+          localStorage.setItem('email', res.usuario.email);
         }
       })
     );
-  }
+}
+
 
 
   register(data: any) {
@@ -49,8 +49,15 @@ export class AuthService {
 
   // 👉 Logout
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
+  const email = localStorage.getItem('email');
+  if (email) {
+    localStorage.removeItem(`carrito_${email}`);
   }
+
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+  localStorage.removeItem('email');
+}
+
 
 }
