@@ -88,7 +88,7 @@ import { AuthService } from '../../services/auth.service';
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 440px;
+      max-width: 600px;
       background: rgba(15, 15, 30, 0.65);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);

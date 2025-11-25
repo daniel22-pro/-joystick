@@ -18,7 +18,7 @@ export class AuthService {
       tap(res => {
         if (res.access_token) {
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('role', res.usuario.role);  // ← AQUI ESTÁ LA CLAVE
+          localStorage.setItem('role', res.usuario.role); 
           localStorage.setItem('email', res.usuario.email);
         }
       })

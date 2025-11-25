@@ -10,8 +10,6 @@ export class AuthService {
     private readonly usuariosService: UsuariosService,
     private readonly jwtService: JwtService,
   ) {}
-
-  // ✅ Registro (opcional, si no lo tienes en otro controlador)
   async register(dto: any) {
     return this.usuariosService.create(dto);
   }
